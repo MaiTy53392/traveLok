@@ -27,7 +27,6 @@ class _SplashHomeState extends State<SplashHome> {
         (route) => false,
       );
     });
-    // TODO: implement initState
     super.initState();
   }
 
@@ -46,13 +45,13 @@ class _SplashHomeState extends State<SplashHome> {
           ),
           const Center(
             child: Text(
-                "TraveloK Vietnam",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+              "TraveloK Vietnam",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
+            ),
           ),
         ],
       ),

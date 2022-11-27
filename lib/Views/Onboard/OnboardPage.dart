@@ -50,8 +50,7 @@ class _OnboardPageState extends State<OnboardPage> {
                       height: 400,
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("assets/images/bg-welcome.jpg"),
-                              fit: BoxFit.cover),
+                              image: AssetImage(""), fit: BoxFit.cover),
                           color: Colors.redAccent,
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(30),
@@ -71,7 +70,7 @@ class _OnboardPageState extends State<OnboardPage> {
                       ),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 24, right: 24),
                     child: Text(
                       "As Friends tours and travel, we customize "
@@ -83,12 +82,9 @@ class _OnboardPageState extends State<OnboardPage> {
                     ),
                   ),
                   const Spacer(),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children:
-                          List.generate(3, (index) => dot(index, context)),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(3, (index) => dot(index, context)),
                   ),
                   const Spacer(),
                   // GestureDetector(
@@ -115,24 +111,20 @@ class _OnboardPageState extends State<OnboardPage> {
                   // ),
                   Container(
                     height: 50,
-                    margin: EdgeInsets.all(40),
+                    margin: const EdgeInsets.all(40),
                     width: double.infinity,
                     child: TextButton(
-                      child: Text(
-                        currentIndex == 3 - 3 ? "Get started" : "Next",
-                        style: TextStyle(color: Colors.white),
-                      ),
                       onPressed: () {
                         if (currentIndex == 3 - 1) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => LoginPage(),
+                              builder: (_) => const LoginPage(),
                             ),
                           );
                         }
                         _controller.nextPage(
-                          duration: Duration(microseconds: 100),
+                          duration: const Duration(microseconds: 100),
                           curve: Curves.bounceIn,
                         );
                       },
@@ -144,6 +136,10 @@ class _OnboardPageState extends State<OnboardPage> {
                         )),
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.blue),
+                      ),
+                      child: Text(
+                        currentIndex == 3 - 3 ? "Get started" : "Next",
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -161,7 +157,7 @@ class _OnboardPageState extends State<OnboardPage> {
     return Container(
       height: 10,
       width: currentIndex == index ? 40 : 10,
-      margin: EdgeInsets.only(right: 5),
+      margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20), color: Colors.blue),
     );

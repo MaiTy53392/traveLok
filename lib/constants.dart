@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColor {
-  static Color xOverViewBackgroundColor = Color(0xFFFFFFFF);
+  static Color xOverViewBackgroundColor = const Color(0xFFFFFFFF);
   static Color xGrayBackgroundColor = Color(0xFFEEEEEE);
   static Color xBlackBackgroundColor = Color(0x42000000);
   static Color xBackgroundColor = Color(0xFF448AFF);

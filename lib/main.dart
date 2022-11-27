@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelok_vietnam_app/Views/Search/SearchPage.dart';
 import 'Views/SplashHome/SplashHome.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const SplashHome(title: 'TraveloK Vietnam'),
+      // home: const SearchPage(),
     );
   }
 }

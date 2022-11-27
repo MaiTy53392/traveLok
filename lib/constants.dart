@@ -9,6 +9,6 @@ class AppColor {
   static Color xGrayTextColor = Color(0xFF9E9E9E);
   static Color xLightTextColor = Color(0xB3FFFFFF);
   static Color xDarkTextColor = Color(0xFF303030);
-  static Color xShadowColor = Color(0xFFF5F5F5);
+  static Color xShadowColor = Color(0xFFFAFAFA);
   static Color xOrangeColor = Color(0xFFF57F17);
 }

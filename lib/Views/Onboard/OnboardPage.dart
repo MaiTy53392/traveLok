@@ -57,7 +57,7 @@ class _OnboardPageState extends State<OnboardPage> {
                               bottomRight: Radius.circular(30))),
                     ),
                   ),
-                  Positioned(
+                  const Positioned(
                     top: 350,
                     child: Padding(
                       padding: EdgeInsets.all(24),

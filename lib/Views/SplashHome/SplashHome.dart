@@ -13,7 +13,9 @@ class SplashHome extends StatefulWidget {
 class _SplashHomeState extends State<SplashHome> {
   @override
   void initState() {
+
     var splashHome = const Duration(seconds: 5);
+
     // delayed 3 seconds to next page
     Future.delayed(splashHome, () {
       // to next page and close this page
@@ -27,7 +29,6 @@ class _SplashHomeState extends State<SplashHome> {
         (route) => false,
       );
     });
-    // TODO: implement initState
     super.initState();
   }
 
@@ -46,13 +47,13 @@ class _SplashHomeState extends State<SplashHome> {
           ),
           const Center(
             child: Text(
-                "TraveloK Vietnam",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+              "TraveloK Vietnam",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
+            ),
           ),
         ],
       ),

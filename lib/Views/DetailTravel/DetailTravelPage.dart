@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Models/Station_Travel.dart';
-import 'package:travelok_vietnam_app/Views/BottomNavigationBar.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
-
-import '../Home/HomePage.dart';
 
 class DetailTravel extends StatelessWidget {
   const DetailTravel({Key? key, required this.travel}) : super(key: key);

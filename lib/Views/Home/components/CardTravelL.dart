@@ -15,7 +15,7 @@ class CardTravelL extends StatelessWidget {
     return FutureBuilder(
       future: travelController.fetchTravel(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data!= null) {
+        if (snapshot.data != null) {
           return Container(
             height: 450,
             child: ListView.builder(
@@ -199,7 +199,7 @@ class CardTravelL extends StatelessWidget {
                         // CONTENT 1
                         Container(
                           margin:
-                          const EdgeInsets.only(left: 8, right: 8, top: 16),
+                              const EdgeInsets.only(left: 8, right: 8, top: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -208,7 +208,7 @@ class CardTravelL extends StatelessWidget {
                                 height: 16,
                                 decoration: BoxDecoration(
                                     color:
-                                    constants.AppColor.xGrayBackgroundColor,
+                                        constants.AppColor.xGrayBackgroundColor,
                                     borderRadius: BorderRadius.circular(5)),
                               ),
                               Row(
@@ -238,7 +238,7 @@ class CardTravelL extends StatelessWidget {
                         // CONTENT 2
                         Container(
                           margin:
-                          const EdgeInsets.only(left: 8, right: 8, top: 12),
+                              const EdgeInsets.only(left: 8, right: 8, top: 12),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

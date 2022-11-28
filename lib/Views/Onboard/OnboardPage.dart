@@ -9,9 +9,8 @@ class OnboardPage extends StatefulWidget {
 }
 
 class _OnboardPageState extends State<OnboardPage> {
-
   int _currentIndex = 0;
-  
+
   late PageController _controller;
   @override
   void initState() {
@@ -36,7 +35,7 @@ class _OnboardPageState extends State<OnboardPage> {
             itemCount: 3,
             onPageChanged: (int index) {
               setState(() {
-                currentIndex = index;
+                _currentIndex = index;
               });
             },
             itemBuilder: (_, i) {
@@ -117,7 +116,7 @@ class _OnboardPageState extends State<OnboardPage> {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () {
-                        if (currentIndex == 3 - 1) {
+                        if (_currentIndex == 3 - 1) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -140,7 +139,7 @@ class _OnboardPageState extends State<OnboardPage> {
                             MaterialStateProperty.all<Color>(Colors.blue),
                       ),
                       child: Text(
-                        currentIndex == 3 - 3 ? "Get started" : "Next",
+                        _currentIndex == 3 - 3 ? "Get started" : "Next",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -158,7 +157,7 @@ class _OnboardPageState extends State<OnboardPage> {
   Container dot(int index, BuildContext context) {
     return Container(
       height: 10,
-      width: currentIndex == index ? 40 : 10,
+      width: _currentIndex == index ? 40 : 10,
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20), color: Colors.blue),

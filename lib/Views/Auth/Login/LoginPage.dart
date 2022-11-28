@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Views/Auth/Register/RegisterPage.dart';
+import 'package:travelok_vietnam_app/Views/BottomNavigationBar.dart';
 import 'package:travelok_vietnam_app/Views/Home/HomePage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
@@ -11,12 +12,13 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: constants.AppColor.xOverViewBackgroundColor,
       resizeToAvoidBottomInset: false,
+
       body: Container(
         width: double.infinity,
         padding: EdgeInsets.only(left: 20, right: 20, top: 40),
         child: Column(
           children: <Widget>[
-            // IconBar
+            // TOP NAVBAR
             Container(
               alignment: Alignment.topLeft,
               child: GestureDetector(
@@ -25,8 +27,8 @@ class LoginPage extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  width: 40,
-                  height: 40,
+                  width: 45,
+                  height: 45,
                   decoration: BoxDecoration(
                       color: constants.AppColor.xGrayBackgroundColor,
                       shape: BoxShape.circle),
@@ -138,7 +140,7 @@ class LoginPage extends StatelessWidget {
               onTap: () {
                 // Write Click Listener Code Here.
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const HomePage()));
+                    MaterialPageRoute(builder: (context) => const BottomNavBar()));
               },
               child: Container(
                 alignment: Alignment.center,

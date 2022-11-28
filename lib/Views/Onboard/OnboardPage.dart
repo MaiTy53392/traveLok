@@ -9,7 +9,9 @@ class OnboardPage extends StatefulWidget {
 }
 
 class _OnboardPageState extends State<OnboardPage> {
-  int currentIndex = 0;
+
+  int _currentIndex = 0;
+  
   late PageController _controller;
   @override
   void initState() {

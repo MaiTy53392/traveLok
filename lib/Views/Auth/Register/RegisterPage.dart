@@ -15,7 +15,7 @@ class RegisterPage extends StatelessWidget {
         padding: EdgeInsets.only(left: 20, right: 20, top: 40),
         child: Column(
           children: <Widget>[
-            // ICON BAR
+            // TOP NAVBAR
             Container(
               alignment: Alignment.topLeft,
               child: GestureDetector(
@@ -24,8 +24,8 @@ class RegisterPage extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: Container(
-                  width: 40,
-                  height: 40,
+                  width: 45,
+                  height: 45,
                   decoration: BoxDecoration(
                       color: constants.AppColor.xGrayBackgroundColor,
                       shape: BoxShape.circle),

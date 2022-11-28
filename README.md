@@ -14,3 +14,23 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Views
+- Splash --> Onboard
+- Onboard <--> Login
+- Login <--> Register
+- Login --> Home
+- Home(Profile) <--> Profile
++ Profile --> Home
++ Profile --> EditProfile
++ ...
+- Home(Notify) <--> Notify
++ Notify --> Home
++ ...
+- Home(Travel) <--> DetailTravel
++ DetailTravel --> Home
++ DetailTravel --> Booking
++ ...
+- Home(View all) <--> ViewAll
++ ViewAll --> Home
++ ...

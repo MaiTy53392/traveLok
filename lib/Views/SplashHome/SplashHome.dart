@@ -13,7 +13,9 @@ class SplashHome extends StatefulWidget {
 class _SplashHomeState extends State<SplashHome> {
   @override
   void initState() {
-    var splashHome = Duration(seconds: 3);
+
+    var splashHome = const Duration(seconds: 5);
+
     // delayed 3 seconds to next page
     Future.delayed(splashHome, () {
       // to next page and close this page

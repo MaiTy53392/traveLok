@@ -39,7 +39,7 @@ class _ViewAllPageState extends State<ViewAllPage> {
       body: Column(
         children: [
           Container(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: (const Text(
                 'All Popular Trip Package',
                 style: TextStyle(
@@ -53,7 +53,7 @@ class _ViewAllPageState extends State<ViewAllPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return Stack(children: <Widget>[
                       Container(
-                          margin: EdgeInsets.fromLTRB(20, 5, 10, 10),
+                          margin: const EdgeInsets.fromLTRB(20, 5, 10, 10),
                           height: 170,
                           width: double.infinity,
                           decoration: BoxDecoration(

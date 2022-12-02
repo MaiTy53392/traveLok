@@ -117,7 +117,7 @@ class _OnboardPageState extends State<OnboardPage> {
                     child: TextButton(
                       onPressed: () {
                         if (_currentIndex == 3 - 1) {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (_) => const LoginPage(),

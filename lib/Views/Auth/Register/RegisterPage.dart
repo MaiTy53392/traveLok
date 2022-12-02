@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Views/Auth/Login/LoginPage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
-class RegisterPage extends StatelessWidget {
+import 'package:firebase_auth/firebase_auth.dart';
+
+class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
+
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _displayNameTextController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +94,9 @@ class RegisterPage extends StatelessWidget {
               ),
               child: TextField(
                 cursorColor: constants.AppColor.xBackgroundColor,
-                decoration: InputDecoration(
-                  hintText: "Tên của bạn",
+                controller: _displayNameTextController,
+                decoration: const InputDecoration(
+                  hintText: "Tên hiển thị",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
@@ -94,7 +107,7 @@ class RegisterPage extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(top: 20),
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -108,8 +121,9 @@ class RegisterPage extends StatelessWidget {
               ),
               child: TextField(
                 cursorColor: constants.AppColor.xBackgroundColor,
-                decoration: InputDecoration(
-                  hintText: "example@donga.edu.vn",
+                controller: _emailTextController,
+                decoration: const InputDecoration(
+                  hintText: "Email của bạn",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
@@ -120,7 +134,7 @@ class RegisterPage extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(top: 20),
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -134,7 +148,9 @@ class RegisterPage extends StatelessWidget {
               ),
               child: TextField(
                 cursorColor: constants.AppColor.xBackgroundColor,
-                decoration: InputDecoration(
+                controller: _passwordTextController,
+                obscureText: true,
+                decoration: const InputDecoration(
                   hintText: "Mật khẩu",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -146,8 +162,22 @@ class RegisterPage extends StatelessWidget {
             // BUTTON REGISTER NOW
             GestureDetector(
               onTap: () {
-                // Write Click Listener Code Here.
-                Navigator.pop(context);
+                FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
+                        email: _emailTextController.text,
+                        password: _passwordTextController.text)
+                    .then((result) {
+                      print(result.user);
+                    return result.user!.updateDisplayName(_displayNameTextController.text);
+                })
+                    .then((value) {
+                  print("Created New Account");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                })
+                    .onError((error, stackTrace) {
+                  print("Error ${error.toString()}");
+                });
               },
               child: Container(
                 alignment: Alignment.center,
@@ -187,8 +217,12 @@ class RegisterPage extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      // Write Tap Code Here.
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
                     },
                   )
                 ],

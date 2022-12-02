@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "950837574677",
+    "project_id": "travelandroid-db4b7",
+    "storage_bucket": "travelandroid-db4b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950837574677:android:0250b65998169c8fb2a21c",
+        "android_client_info": {
+          "package_name": "com.example.travelok_vietnam_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "950837574677-7pfj0vdupa7h9erupgsd70jdu0gdjd58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCoGZnr2u22_Kc_G0lH_lnEc066IIZVWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "950837574677-7pfj0vdupa7h9erupgsd70jdu0gdjd58.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

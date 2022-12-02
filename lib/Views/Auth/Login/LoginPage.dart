@@ -1,11 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:travelok_vietnam_app/Views/Auth/Register/RegisterPage.dart';
 import 'package:travelok_vietnam_app/Views/BottomNavigationBar.dart';
-import 'package:travelok_vietnam_app/Views/Home/HomePage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
-class LoginPage extends StatelessWidget {
+import 'package:travelok_vietnam_app/Views/Home/HomePage.dart';
+import 'package:travelok_vietnam_app/Views/Auth/Register/RegisterPage.dart';
+import 'package:travelok_vietnam_app/Views/Auth/ResetPassword/ResetPasswordPage.dart';
+
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +83,7 @@ class LoginPage extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(top: 50),
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -84,9 +96,10 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               child: TextField(
+                controller: _emailTextController,
                 cursorColor: constants.AppColor.xBackgroundColor,
-                decoration: InputDecoration(
-                  hintText: "example@gmail.com",
+                decoration: const InputDecoration(
+                  hintText: "Email của bạn",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
@@ -110,8 +123,10 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               child: TextField(
+                obscureText: true,
+                controller: _passwordTextController,
                 cursorColor: constants.AppColor.xBackgroundColor,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Mật khẩu",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -125,7 +140,12 @@ class LoginPage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 20),
               child: GestureDetector(
                 onTap: () {
-                  // Write Click Listener Code Here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResetPassword(),
+                    ),
+                  );
                 },
                 child: Text(
                   "Quên mật khẩu?",
@@ -138,9 +158,17 @@ class LoginPage extends StatelessWidget {
             // BUTTON Đăng Nhập
             GestureDetector(
               onTap: () {
-                // Write Click Listener Code Here.
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const BottomNavBar()));
+                FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text)
+                    .then((value) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => const BottomNavBar()));
+                }).onError((error, stackTrace) {
+                  print("Error ${error.toString()}");
+                });
+
               },
               child: Container(
                 alignment: Alignment.center,

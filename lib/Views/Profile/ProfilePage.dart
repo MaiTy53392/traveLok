@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Views/EditProfile/EditProfilePage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:travelok_vietnam_app/Views/Auth/Login/LoginPage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -10,6 +12,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  var currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,14 +79,14 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: const EdgeInsets.only(top: 50),
               child: Column(
                 children: <Widget>[
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 50,
                     backgroundImage: NetworkImage(
                         'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "Hoang Thai Ninh",
+                    currentUser!.displayName.toString(),
                     style: TextStyle(
                       fontSize: 20,
                       color: constants.AppColor.xDarkTextColor,
@@ -91,11 +95,23 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "ninh53398@donga.edu.vn",
+                    currentUser!.email.toString(),
                     style: TextStyle(
                       fontSize: 14,
                       color: constants.AppColor.xGrayTextColor,
                       fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      child: Text("Đăng xuất"),
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut().then((value) {
+                          print("Đăng xuất thành công");
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) => LoginPage()));
+                        });
+                      },
                     ),
                   ),
                   Container(

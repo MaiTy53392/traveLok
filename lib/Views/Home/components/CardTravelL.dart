@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Models/Repository/Repository_Travel.dart';
 import 'package:travelok_vietnam_app/Views/DetailTravel/DetailTravelPage.dart';
 import 'package:travelok_vietnam_app/Views/Home/components/LoadingCard.dart';
-import 'package:travelok_vietnam_app/ViewModels/TravelController.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
 class CardTravelL extends StatefulWidget {
@@ -27,11 +26,9 @@ class _CardTravelLState extends State<CardTravelL> {
 
   @override
   Widget build(BuildContext context) {
-    // Dependency Injection
-    var travelController = TravelController(RepositoryTravel());
 
-    return FutureBuilder(
-        future: travelController.fetchTravel(),
+    return StreamBuilder(
+        stream: RepositoryTravel().getTravel(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return SizedBox(
@@ -204,10 +201,8 @@ class _CardTravelLState extends State<CardTravelL> {
               ),
             );
           } else if (snapshot.hasError) {
-            return Container(
-              child: Center(
-                child: Text('Not Found Data'),
-              ),
+            return const Center(
+              child: Text('Not Found Data'),
             );
           } else {
             return LoadingCard();

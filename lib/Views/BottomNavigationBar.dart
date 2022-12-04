@@ -49,7 +49,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           elevation: 0,
           child: Container(
             height: 80,
@@ -61,7 +61,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     blurRadius: 10,
                     color: constants.AppColor.xGrayBackgroundColor)
               ],
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
@@ -114,13 +114,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.edit_calendar,
+                            Icons.room,
                             color: currentTab == 1
                                 ? constants.AppColor.xBackgroundColor
                                 : constants.AppColor.xGrayTextColor,
                           ),
                           Text(
-                            'Lịch trình',
+                            'Địa điểm',
                             style: TextStyle(
                                 color: currentTab == 1
                                     ? constants.AppColor.xBackgroundColor
@@ -147,13 +147,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.message_outlined,
+                            Icons.supervised_user_circle_sharp,
                             color: currentTab == 2
                                 ? constants.AppColor.xBackgroundColor
                                 : constants.AppColor.xGrayTextColor,
                           ),
                           Text(
-                            'Tin nhắn',
+                            'Người dùng',
                             style: TextStyle(
                                 color: currentTab == 2
                                     ? constants.AppColor.xBackgroundColor

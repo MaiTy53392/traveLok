@@ -171,7 +171,7 @@ class _ViewAllPageState extends State<ViewAllPage> {
                           borderRadius: BorderRadius.circular(20),
                           child: Image(
                             width: 100,
-                            image: AssetImage('assets/images/bg-welcome.jpg'),
+                            image: AssetImage('images/bg-welcome.jpg'),
                             fit: BoxFit.cover,
                           ),
                         ),

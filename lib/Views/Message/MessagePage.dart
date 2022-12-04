@@ -1,6 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({Key? key}) : super(key: key);
@@ -10,6 +13,7 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,27 +26,8 @@ class _MessagePageState extends State<MessagePage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color:
-                            constants.AppColor.xDarkTextColor.withOpacity(.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.keyboard_arrow_left,
-                        color: constants.AppColor.xDarkTextColor,
-                        size: 30,
-                      ),
-                    ),
-                  ),
                   Container(
                     child: Text(
                       'Quản lý Người dùng',
@@ -50,25 +35,6 @@ class _MessagePageState extends State<MessagePage> {
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                         color: constants.AppColor.xDarkTextColor,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      print('Edit');
-                    },
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color:
-                            constants.AppColor.xDarkTextColor.withOpacity(.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.mode_edit_outline_outlined,
-                        color: constants.AppColor.xDarkTextColor,
-                        size: 22,
                       ),
                     ),
                   ),
@@ -88,7 +54,8 @@ class _MessagePageState extends State<MessagePage> {
                       motion: StretchMotion(),
                       children: [
                         SlidableAction(
-                          onPressed: ((context) {}),
+                          onPressed: ((context) {
+                          }),
                           icon: Icons.edit,
                           foregroundColor: constants.AppColor.xSuccessColor,
                         ),
@@ -118,7 +85,7 @@ class _MessagePageState extends State<MessagePage> {
                         child: Row(
                           children: <Widget>[
                             // IMAGE
-                            CircleAvatar(
+                            const CircleAvatar(
                               radius: 40,
                               backgroundImage: NetworkImage(
                                   'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),

@@ -1,45 +1,35 @@
-import 'package:travelok_vietnam_app/Models/Repository/Repository.dart';
 import 'package:travelok_vietnam_app/Models/Station_Travel.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+class RepositoryTravel {
+  static final RepositoryTravel _repositoryTravel =
+      RepositoryTravel._internal();
 
-class RepositoryTravel implements Repository {
-  String dataUrl = 'https://637dbee59c2635df8f8d954f.mockapi.io/api';
-  final productsRef = FirebaseFirestore.instance.collection("products");
-  @override
-  Future<List<Travel>> getTravel() async {
-    List<Travel> travelList = [];
-    await productsRef.get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((DocumentSnapshot doc) {
-        Map<String, dynamic> map = doc.data() as Map<String, dynamic>;
-        travelList.add(Travel.fromJson(map));
-      });
-    });
-    return travelList;
+  RepositoryTravel._internal();
+
+  factory RepositoryTravel() {
+    return _repositoryTravel;
+  }
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  Stream<List<Travel>> getTravel() {
+    return _db.collection("products").snapshots().map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => Travel.fromMap(doc.data(), doc.id),
+              )
+              .toList(),
+        );
   }
 
-  @override
-  Future<String> patchCompleted(Travel travel) {
-    throw UnimplementedError();
+  Future<void> updateTravel(Travel travel) {
+    return _db.collection('products').doc(travel.id).update(travel.toMap());
   }
 
-  @override
-  Future<String> putCompleted(Travel travel) {
-    // TODO: implement putCompleted
-    throw UnimplementedError();
+  Future<void> deleteTravel(String id) {
+    return _db.collection('products').doc(id).delete();
   }
 
-  @override
-  Future<String> deleteTravel(Travel travel) {
-    // TODO: implement deleteTravel
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<String> postTravel(Travel travel) {
-    // TODO: implement postTravel
-    throw UnimplementedError();
+  Future<void> addNote(Travel travel) {
+    return _db.collection('products').add(travel.toMap());
   }
 }

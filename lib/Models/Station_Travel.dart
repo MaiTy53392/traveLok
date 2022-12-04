@@ -9,32 +9,31 @@ class Travel {
 
   Travel(
       {this.title,
-        this.description,
-        this.rating,
-        this.price,
-        this.country,
-        this.imageUrl,
-        this.id});
+      this.description,
+      this.rating,
+      this.price,
+      this.country,
+      this.imageUrl,
+      this.id});
 
-  Travel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    description = json['description'];
-    rating = json['rating'];
-    price = json['price'];
-    country = json['country'];
-    imageUrl = json['imageUrl'];
-    id = json['id'];
+  Travel.fromMap(Map<String, dynamic> data, String idCollection) {
+    title = data['title'];
+    description = data['description'];
+    rating = data['rating'];
+    price = data['price'];
+    country = data['country'];
+    imageUrl = data['imageUrl'];
+    id = idCollection;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['rating'] = this.rating;
-    data['price'] = this.price;
-    data['country'] = this.country;
-    data['imageUrl'] = this.imageUrl;
-    data['id'] = this.id;
-    return data;
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'rating': rating,
+      'price': price,
+      'country': country,
+      "imageUrl": imageUrl
+    };
   }
 }

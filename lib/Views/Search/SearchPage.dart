@@ -100,7 +100,7 @@ class _SearchPageState extends State<SearchPage> {
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.only(top: 20),
               child: Text(
-                "Search Places",
+                "Địa điểm",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

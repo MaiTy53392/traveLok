@@ -8,10 +8,6 @@ import 'package:travelok_vietnam_app/Views/Profile/ProfilePage.dart';
 import 'package:travelok_vietnam_app/Views/ViewAll/ViewAllPage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
-import '../../Models/Repository/Repository_Travel.dart';
-import '../../Models/Station_Travel.dart';
-import '../../ViewModels/TravelController.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -24,8 +20,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Dependency Injection
-    var travelController = TravelController(RepositoryTravel());
     return GestureDetector(
       onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: SafeArea(
@@ -170,12 +164,12 @@ class _HomePageState extends State<HomePage> {
                     Expanded(child: Container()),
                     GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const ViewAllPage(),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewAllPage(),
+                          ),
+                        );
                       },
                       child: Text(
                         'Xem tất cả',

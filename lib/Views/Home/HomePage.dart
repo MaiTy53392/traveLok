@@ -9,6 +9,7 @@ import 'package:travelok_vietnam_app/Views/ViewAll/ViewAllPage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
 import '../../Models/Repository/Repository_Travel.dart';
+import '../../Models/Station_Travel.dart';
 import '../../ViewModels/TravelController.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,7 +26,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // Dependency Injection
     var travelController = TravelController(RepositoryTravel());
-
     return GestureDetector(
       onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: SafeArea(

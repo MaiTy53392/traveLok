@@ -12,7 +12,6 @@ class ResetPassword extends StatefulWidget {
 }
 
 class _ResetPassword extends State<ResetPassword> {
-
   final TextEditingController _emailTextController = TextEditingController();
 
   @override
@@ -20,7 +19,6 @@ class _ResetPassword extends State<ResetPassword> {
     return Scaffold(
       backgroundColor: constants.AppColor.xOverViewBackgroundColor,
       resizeToAvoidBottomInset: false,
-
       body: Container(
         width: double.infinity,
         padding: EdgeInsets.only(left: 20, right: 20, top: 40),
@@ -102,8 +100,6 @@ class _ResetPassword extends State<ResetPassword> {
               ),
             ),
 
-
-
             // Sang đăng nhập
             Container(
               alignment: Alignment.centerRight,
@@ -129,13 +125,25 @@ class _ResetPassword extends State<ResetPassword> {
             GestureDetector(
               onTap: () {
                 FirebaseAuth.instance
-                    .sendPasswordResetEmail(email: _emailTextController.text)
-                    .then((value) => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
-                ));
+                    .sendPasswordResetEmail(
+                        email: _emailTextController.text.trim())
+                    .then((value) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ),
+                          )
+                        })
+                    .catchError((e) => {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                    content: Text(
+                                        "Email không chính xác hoặc tài khoản đã bị xoá!"));
+                              })
+                        });
               },
               child: Container(
                 alignment: Alignment.center,

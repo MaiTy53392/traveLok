@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Views/Auth/Login/LoginPage.dart';
+import 'package:travelok_vietnam_app/Views/Onboard/components/Dot.dart';
+import 'package:travelok_vietnam_app/constants.dart' as constants;
+import 'components/Content.dart';
 
 class OnboardPage extends StatefulWidget {
   const OnboardPage({Key? key}) : super(key: key);
@@ -9,136 +12,190 @@ class OnboardPage extends StatefulWidget {
 }
 
 class _OnboardPageState extends State<OnboardPage> {
-  int _currentIndex = 0;
+  late PageController _pageController;
 
-  late PageController _controller;
+  int _pageDot = 0;
+
   @override
   void initState() {
-    _controller = PageController(initialPage: 0);
+    // TODO: implement initState
+    _pageController = PageController(initialPage: 0);
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    // TODO: implement dispose
+    _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: <Widget> [
-        Expanded(
-          child: PageView.builder(
-            controller: _controller,
-            itemCount: 3,
-            onPageChanged: (int index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            itemBuilder: (_, i) {
-              return Column(
-                children: [
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      padding:
-                      const EdgeInsets.only(left: 20, right: 20, top: 5),
+      body: Stack(
+        children: <Widget>[
+          SizedBox(
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _pageDot = index;
+                });
+              },
+              itemCount: DataOnB.length,
+              itemBuilder: (context, index) {
+                var dataOnB = DataOnB[index];
+                return Column(
+                  children: <Widget>[
+                    // IMAGE
+                    Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 400,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("images/bg-welcome.jpg"), fit: BoxFit.cover),
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30))),
-                    ),
-                  ),
-                  const Positioned(
-                    top: 350,
-                    child: Padding(
-                      padding: EdgeInsets.all(24),
-                      child: Text(
-                        "Life is short and the "
-                            "world is wide",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                      height: MediaQuery.of(context).size.height * .6,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(dataOnB.image),
+                          fit: BoxFit.cover,
+                        ),
+                        color: constants.AppColor.xOverViewBackgroundColor,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                        ),
                       ),
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24),
-                    child: Text(
-                      "As Friends tours and travel, we customize "
-                          "reliable and trustworthy educational tours to "
-                          "destination all over the world",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 14, height: 1.5, color: Colors.grey),
-                    ),
-                  ),
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(3, (index) => dot(index, context)),
-                  ),
-                  const Spacer(),
-                  Container(
-                    height: 50,
-                    margin: const EdgeInsets.all(40),
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {
-                        if (_currentIndex == 3 - 1) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const LoginPage(),
+                    // CONTENT
+                    const SizedBox(height: 25),
+                    Container(
+                      padding: const EdgeInsets.only(left: 30, right: 30),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            dataOnB.title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
+                              color: constants.AppColor.xDarkTextColor,
                             ),
-                          );
-                        }
-                        _controller.nextPage(
-                          duration: const Duration(microseconds: 100),
-                          curve: Curves.bounceIn,
-                        );
-                      },
-                      style: ButtonStyle(
-                        shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            )),
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            dataOnB.description,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: constants.AppColor.xGrayTextColor,
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Text(
-                        _currentIndex == 3 - 3 ? "Get started" : "Next",
-                        style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+
+          // SKIP
+          Positioned(
+            top: 50,
+            right: 20,
+            child: GestureDetector(
+              onTap: () {
+                // IF
+                if (_pageDot == 3 - 1) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                }
+                // Write Click Listener Code Here.
+                _pageController.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.ease,
+                );
+              },
+              child: Text(
+                "Skip",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: constants.AppColor.xGrayTextColor,
+                ),
+              ),
+            ),
+          ),
+          // BUTTON
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              // DOT.
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...List.generate(
+                    DataOnB.length,
+                    (index) => Padding(
+                      padding: const EdgeInsets.only(right: 3),
+                      child: DotIndicator(
+                        isActive: index == _pageDot,
                       ),
                     ),
                   ),
-                  const Spacer(),
                 ],
-              );
-            },
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    top: 30, left: 20, right: 20, bottom: 20),
+                child: GestureDetector(
+                  onTap: () {
+                    // IF
+                    if (_pageDot == 3 - 1) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    }
+                    // Write Click Listener Code Here.
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease,
+                    );
+                  },
+                  child: Container(
+                    height: 65,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color:
+                          constants.AppColor.xBackgroundColor.withOpacity(.9),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: Color(0xffEEEEEE)),
+                      ],
+                    ),
+                    child: const Text(
+                      "Get Started",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        )
-      ],
-    ));
-  }
-
-  Container dot(int index, BuildContext context) {
-    return Container(
-      height: 10,
-      width: _currentIndex == index ? 40 : 10,
-      margin: const EdgeInsets.only(right: 5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: Colors.blue),
+        ],
+      ),
     );
   }
 }

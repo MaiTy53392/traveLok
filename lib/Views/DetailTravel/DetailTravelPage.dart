@@ -10,145 +10,160 @@ class DetailTravel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        child: Stack(
-          children: [
-            // IMAGE
-            Positioned(
-              left: 0,
-              right: 0,
-              child: Container(
-                width: double.maxFinite,
-                height: 450,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage('${travel.imageUrl}'),
-                      fit: BoxFit.cover),
-                ),
+      body: Stack(
+        children: <Widget>[
+          // IMAGE TRAVEL
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * .5,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage('${travel.imageUrl}'),
+                fit: BoxFit.cover,
               ),
             ),
-            // AppBAR
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[800],
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.keyboard_arrow_left,
-                        color: constants.AppColor.xOverViewBackgroundColor,
-                        size: 30,
-                      ),
+          ),
+          // APPBAR
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 50,
+              left: 20,
+              right: 20,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: constants.AppColor.xDarkTextColor.withOpacity(.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.keyboard_arrow_left,
+                      color: constants.AppColor.xOverViewBackgroundColor,
+                      size: 30,
                     ),
                   ),
-                  Container(
-                    child: Text(
-                      'Detail',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: constants.AppColor.xOverViewBackgroundColor),
+                ),
+                Container(
+                  child: Text(
+                    'Detail',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: constants.AppColor.xOverViewBackgroundColor),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print('Save');
+                  },
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: constants.AppColor.xDarkTextColor.withOpacity(.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.bookmark_border,
+                      color: constants.AppColor.xOverViewBackgroundColor,
+                      size: 25,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      print('Save');
-                    },
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: constants.AppColor.xDarkTextColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.bookmark_border,
-                        color: constants.AppColor.xOverViewBackgroundColor,
-                        size: 25,
-                      ),
-                    ),
-                  ),
+                ),
+              ],
+            ),
+          ),
+          // DETAIL
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * .6,
+              decoration: BoxDecoration(
+                color: constants.AppColor.xOverViewBackgroundColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                      color: constants.AppColor.xDarkTextColor.withOpacity(.2),
+                      offset: const Offset(0, -4),
+                      blurRadius: 8),
                 ],
               ),
-            ),
-            //
-            Positioned(
-              bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
-                width: MediaQuery.of(context).size.width,
-                height: 470,
-                decoration: BoxDecoration(
-                  color: constants.AppColor.xOverViewBackgroundColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    // View
-                    Column(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            print('View');
-                          },
-                          icon: Icon(Icons.maximize),
-                          color: Colors.grey,
-                        )
-                      ],
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10,
+                      left: 20,
+                      right: 20,
                     ),
-                    // TITLE & AVATAR
-                    Row(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.maximize),
+                      color: Colors.grey,
+                    ),
+                  ),
+
+                  // @1 _ TITLE
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
+                          children: [
                             Text(
                               '${travel.title}',
                               style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
                                 color: constants.AppColor.xDarkTextColor,
                               ),
                             ),
-                            const SizedBox(height: 5),
                             Text(
-                              'France, Paris',
+                              '${travel.country}',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: constants.AppColor.xGrayTextColor,
                               ),
-                            )
+                            ),
                           ],
                         ),
-                        const CircleAvatar(
+                        CircleAvatar(
                           backgroundImage: NetworkImage(
                               'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    Row(
+                  ),
+
+                  // @2 _ DETAIL
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        // Country
                         Row(
                           children: [
                             Icon(
@@ -166,6 +181,7 @@ class DetailTravel extends StatelessWidget {
                             ),
                           ],
                         ),
+                        // Rating
                         Row(
                           children: [
                             const Icon(
@@ -183,6 +199,7 @@ class DetailTravel extends StatelessWidget {
                             )
                           ],
                         ),
+                        // Price
                         Row(
                           children: [
                             Text(
@@ -203,8 +220,16 @@ class DetailTravel extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    Wrap(
+                  ),
+
+                  // @3 _ LIST
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Wrap(
                       children: List.generate(5, (index) {
                         return Container(
                           margin: EdgeInsets.all(7),
@@ -212,16 +237,27 @@ class DetailTravel extends StatelessWidget {
                           height: 50,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: Colors.grey),
+                              image: DecorationImage(
+                                image: NetworkImage('${travel.imageUrl}'),
+                                fit: BoxFit.cover,
+                              )),
                         );
                       }),
                     ),
-                    const SizedBox(height: 20),
-                    Column(
+                  ),
+
+                  // @4 _ ABOUT
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'About Destination',
+                          'Giới thiệu về ${travel.title}',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -239,8 +275,17 @@ class DetailTravel extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    GestureDetector(
+                  ),
+                  // isEmpty
+                  Expanded(child: Container()),
+                  // @5 _ Button BOOKNOW
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 20,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: GestureDetector(
                       onTap: () {
                         // Write Click Listener Code Here.
                         print('BOOK');
@@ -267,12 +312,12 @@ class DetailTravel extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

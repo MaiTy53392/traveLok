@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Views/BottomNavigationBar.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
-import 'package:travelok_vietnam_app/Views/Home/HomePage.dart';
 import 'package:travelok_vietnam_app/Views/Auth/Register/RegisterPage.dart';
 import 'package:travelok_vietnam_app/Views/Auth/ResetPassword/ResetPasswordPage.dart';
 
@@ -15,7 +16,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  GoogleSignInAccount? _user;
+  GoogleSignInAccount get user => _user!;
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
 
@@ -24,10 +27,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: constants.AppColor.xOverViewBackgroundColor,
       resizeToAvoidBottomInset: false,
-
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.only(left: 20, right: 20, top: 40),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
         child: Column(
           children: <Widget>[
             // TOP NAVBAR
@@ -90,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                 color: constants.AppColor.xGrayBackgroundColor,
                 boxShadow: [
                   BoxShadow(
-                      offset: Offset(0, 10),
+                      offset: const Offset(0, 10),
                       blurRadius: 50,
                       color: constants.AppColor.xShadowColor),
                 ],
@@ -110,14 +112,14 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(top: 20),
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: constants.AppColor.xGrayBackgroundColor,
                 boxShadow: [
                   BoxShadow(
-                      offset: Offset(0, 10),
+                      offset: const Offset(0, 10),
                       blurRadius: 50,
                       color: constants.AppColor.xShadowColor),
                 ],
@@ -158,20 +160,23 @@ class _LoginPageState extends State<LoginPage> {
             // BUTTON Đăng Nhập
             GestureDetector(
               onTap: () {
-                showDialog(context: context, builder: (context) {
-                  return const Center(child: CircularProgressIndicator());
-                });
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const Center(child: CircularProgressIndicator());
+                    });
                 FirebaseAuth.instance
                     .signInWithEmailAndPassword(
-                    email: _emailTextController.text,
-                    password: _passwordTextController.text)
+                        email: _emailTextController.text,
+                        password: _passwordTextController.text)
                     .then((value) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => const BottomNavBar()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavBar()));
                 }).onError((error, stackTrace) {
                   print("Error ${error.toString()}");
                 });
-
               },
               child: Container(
                 alignment: Alignment.center,
@@ -195,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // REGISTER Click
             Container(
-              margin: EdgeInsets.only(top: 40),
+              margin: const EdgeInsets.only(top: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -226,7 +231,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // Text Or Connect
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               child: Text(
                 "Hoặc đăng nhập",
                 style: TextStyle(color: constants.AppColor.xGrayTextColor),
@@ -239,41 +244,53 @@ class _LoginPageState extends State<LoginPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Facebook Icon
-                  GestureDetector(
-                    onTap: () {
-                      print('FACEBOOK');
-                    },
-                    child: const CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://images.unsplash.com/photo-1627843563095-f6e94676cfe0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bG9nbyUyMGZhY2Vib29rfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
-                    ),
-                  ),
+                  IconButton(
+                      icon: const FaIcon(
+                        FontAwesomeIcons.google,
+                        size: 34,
+                      ),
+                      onPressed: () async {
+                        try {
+                          final googleUser = await _googleSignIn.signIn();
+                          if( googleUser == null) return;
+                          _user = googleUser;
+
+                          final googleAuth = await googleUser.authentication;
+                          final credential = GoogleAuthProvider.credential(
+                              accessToken: googleAuth.accessToken,
+                              idToken: googleAuth.idToken
+                          );
+                          FirebaseAuth.instance.signInWithCredential(credential)
+                          .then((value) => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const BottomNavBar())));
+
+                        }catch(e) {
+                          print(e.toString());
+                        }
+                      }),
                   const SizedBox(width: 4),
                   // Instagram Icon
-                  GestureDetector(
-                    onTap: () {
-                      print('INSTAGRAM');
-                    },
-                    child: const CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://images.unsplash.com/photo-1611262588024-d12430b98920?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bG9nbyUyMGZhY2Vib29rfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
-                    ),
-                  ),
+                  IconButton(
+                      icon: const FaIcon(
+                        FontAwesomeIcons.facebook,
+                        size: 34,
+                      ),
+                      onPressed: () {
+                        print("Pressed");
+                      }),
                   const SizedBox(width: 4),
                   // Twitter Icon
-                  GestureDetector(
-                    onTap: () {
-                      print('FACEBOOK');
-                    },
-                    child: const CircleAvatar(
-                      radius: 25,
-                      backgroundImage: NetworkImage(
-                          'https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bG9nbyUyMGZhY2Vib29rfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
-                    ),
-                  ),
+                  IconButton(
+                      icon: const FaIcon(
+                        FontAwesomeIcons.apple,
+                        size: 34,
+                      ),
+                      onPressed: () {
+                        print("Pressed");
+                      }),
                 ],
               ),
             ),

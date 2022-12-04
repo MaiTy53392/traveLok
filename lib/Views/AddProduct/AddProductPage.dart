@@ -1,32 +1,29 @@
-import 'package:intl/intl.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import '../select_photo_options_screen.dart';
 
-class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+class AddProductPage extends StatefulWidget {
+  const AddProductPage({Key? key}) : super(key: key);
 
   @override
-  State<EditProfilePage> createState() => _EditProfilePageState();
+  State<AddProductPage> createState() => _AddProductPage();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _AddProductPage extends State<AddProductPage> {
   File? _image;
   String imageUrl = '';
-  var currentUser = FirebaseAuth.instance.currentUser;
-
-  final TextEditingController _displayNameTextController =
-      TextEditingController();
-  final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _phoneNumberTextController =
-      TextEditingController();
-
+  var title = "";
+  var description = "";
+  var rating = 0;
+  var price = 0;
+  var country = "Không xác định";
   Future _pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -76,15 +73,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _displayNameTextController.text = currentUser!.displayName.toString();
-    _phoneNumberTextController.text = currentUser!.phoneNumber.toString();
-    _emailTextController.text = currentUser!.email.toString();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    CollectionReference products =
+        FirebaseFirestore.instance.collection("products");
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -103,7 +95,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: RichText(
           text: const TextSpan(children: [
             TextSpan(
-                text: 'Cập nhật thông tin',
+                text: 'Thêm địa điểm mới',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -115,59 +107,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
         child: Column(
           children: <Widget>[
-            //INPUT AVATAR
-            Padding(
-              padding: const EdgeInsets.all(28.0),
-              child: Center(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    _showSelectPhotoOptions(context);
-                  },
-                  child: Center(
-                    child: Container(
-                        height: 120.0,
-                        width: 120.0,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey.shade200,
-                        ),
-                        child: Center(
-                            child: _image == null
-                                ? currentUser?.photoURL == null
-                                ?
-                                const CircleAvatar(
-                                  radius: 60,
-                                  backgroundImage: NetworkImage(
-                                      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),
-                                )
-                                : CircleAvatar(
-                                radius: 60,
-                                backgroundImage: NetworkImage(
-                                    currentUser!.photoURL.toString()
-                                )
-                            )
-                                : CircleAvatar(
-                              backgroundImage: FileImage(_image!),
-                              radius: 200.0,
-                            )
-
-                        )
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Center(
-              child: Text(DateFormat('dd/MM/yyyy').format(currentUser!.metadata.creationTime as DateTime)),
-            ),
-            //INPUT DISPLAYNAME
+            // INPUT TITLE
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.only(left: 20, right: 20),
               height: 60,
               decoration: BoxDecoration(
@@ -175,23 +120,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 color: constants.AppColor.xGrayBackgroundColor,
                 boxShadow: [
                   BoxShadow(
-                      offset: Offset(0, 10),
+                      offset: const Offset(0, 10),
                       blurRadius: 50,
                       color: constants.AppColor.xShadowColor),
                 ],
               ),
               child: TextField(
-                controller: _displayNameTextController,
                 cursorColor: constants.AppColor.xBackgroundColor,
+                onChanged: (value) {
+                  title = value;
+                },
                 decoration: const InputDecoration(
-                  hintText: "Tên hiển thị",
+                  hintText: "Tên địa điểm",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
               ),
             ),
 
-            //INPUT PHONENUMBER
+            // INPUT country
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(top: 20),
@@ -202,25 +149,55 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 color: constants.AppColor.xGrayBackgroundColor,
                 boxShadow: [
                   BoxShadow(
-                      offset: Offset(0, 10),
+                      offset: const Offset(0, 10),
+                      blurRadius: 50,
+                      color: constants.AppColor.xShadowColor),
+                ],
+              ),
+              child: TextField(
+                cursorColor: constants.AppColor.xBackgroundColor,
+                onChanged: (value) {
+                  country = value;
+                },
+                decoration: const InputDecoration(
+                  hintText: "Thành phố",
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
+              ),
+            ),
+
+            // INPUT price
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: constants.AppColor.xGrayBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                      offset: const Offset(0, 10),
                       blurRadius: 50,
                       color: constants.AppColor.xShadowColor),
                 ],
               ),
               child: TextField(
                 keyboardType: TextInputType.number,
-                controller: _phoneNumberTextController,
                 cursorColor: constants.AppColor.xBackgroundColor,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                onChanged: (value) {
+                  price = int.parse(value);
+                },
                 decoration: const InputDecoration(
-                  hintText: "Số điện thoại",
+                  hintText: "Giá phòng",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
               ),
             ),
 
-            // INPUT EMAIL
+            // INPUT rating
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(top: 20),
@@ -231,38 +208,88 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 color: constants.AppColor.xGrayBackgroundColor,
                 boxShadow: [
                   BoxShadow(
-                      offset: Offset(0, 10),
+                      offset: const Offset(0, 10),
                       blurRadius: 50,
                       color: constants.AppColor.xShadowColor),
                 ],
               ),
               child: TextField(
-                controller: _emailTextController,
+                keyboardType: TextInputType.number,
                 cursorColor: constants.AppColor.xBackgroundColor,
+                onChanged: (value) {
+                  rating = int.parse(value);
+                },
                 decoration: const InputDecoration(
-                  hintText: "Email của bạn",
+                  hintText: "Đánh giá",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
               ),
             ),
 
+            // INPUT description
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: constants.AppColor.xGrayBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                      offset: const Offset(0, 10),
+                      blurRadius: 50,
+                      color: constants.AppColor.xShadowColor),
+                ],
+              ),
+              child: TextField(
+                cursorColor: constants.AppColor.xBackgroundColor,
+                onChanged: (value) {
+                  description = value;
+                },
+                decoration: const InputDecoration(
+                  hintText: "Mô tả",
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
+              ),
+            ),
+            // IMAGE
+            Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      _showSelectPhotoOptions(context);
+                    },
+                    child: Center(
+                      child: Container(
+                        height: 200.0,
+                        width: 200.0,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                        ),
+                        child: _image == null
+                            ? const Center(
+                                child: Text("Thêm hình ảnh"),
+                              )
+                            : Image(image: FileImage(_image!)),
+                      ),
+                    ))),
+
             const SizedBox(height: 40),
 
-            // BUTTON update
+            // BUTTON CREATE PRODUCT
             GestureDetector(
               onTap: () async {
-                showDialog(context: context, builder: (context) {
-                  return const Center(child: CircularProgressIndicator());
-                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Đang thêm...!')));
                 if (_image == null) {
-                  try {
-                    await currentUser
-                        ?.updateDisplayName(_displayNameTextController.text);
-                    await currentUser?.updateEmail(_emailTextController.text);
-                  } catch (error) {
-                    print(error);
-                  }
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Bạn đã thiếu hình ảnh!')));
                 } else {
                   String uniqueFileName =
                       DateTime.now().millisecondsSinceEpoch.toString();
@@ -272,20 +299,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                   Reference referenceImageToUpload =
                       referenceDirImages.child(uniqueFileName);
-                  try {
-                    //Store the file
-                    await referenceImageToUpload.putFile(File(_image!.path));
-                    //Success: get the download URL
-                    imageUrl = await referenceImageToUpload.getDownloadURL();
-                    await currentUser?.updatePhotoURL(imageUrl);
-                    await currentUser
-                        ?.updateDisplayName(_displayNameTextController.text);
-                    await currentUser?.updateEmail(_emailTextController.text);
-                  } catch (error) {
-                    print(error);
-                  }
+                  await referenceImageToUpload.putFile(File(_image!.path));
+                  imageUrl = await referenceImageToUpload.getDownloadURL();
+
+                  products
+                      .add({
+                        'title': title,
+                        'country': country,
+                        'price': price,
+                        'rating': rating,
+                        'description': description,
+                        'imageURL': imageUrl
+                      })
+                      .then((value) => {
+                            print("Thêm mới thành công!"),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Thêm thành công!'))
+                            ),
+                    Navigator.pop(context)
+                          })
+                      .catchError(
+                          (error) => print("Lỗi khởi tạo: ${error.message}"));
                 }
-                Navigator.pop(context);
               },
               child: Container(
                 alignment: Alignment.center,
@@ -301,7 +337,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ],
                 ),
                 child: const Text(
-                  "Cập nhật",
+                  "Thêm địa điểm",
                   style: TextStyle(color: Colors.white),
                 ),
               ),

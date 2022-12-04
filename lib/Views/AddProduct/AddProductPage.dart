@@ -309,7 +309,7 @@ class _AddProductPage extends State<AddProductPage> {
                         'price': price,
                         'rating': rating,
                         'description': description,
-                        'imageURL': imageUrl
+                        'imageUrl': imageUrl
                       })
                       .then((value) => {
                             print("Thêm mới thành công!"),

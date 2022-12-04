@@ -53,7 +53,7 @@ class DetailTravel extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    'Detail',
+                    '${travel.title}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,

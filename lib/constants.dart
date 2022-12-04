@@ -12,3 +12,13 @@ class AppColor {
   static Color xShadowColor = Color(0xFFFAFAFA);
   static Color xOrangeColor = Color(0xFFF57F17);
 }
+const kHeadTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 24,
+  fontWeight: FontWeight.bold,
+);
+
+const kHeadSubtitleTextStyle = TextStyle(
+  fontSize: 18,
+  color: Colors.black87,
+);

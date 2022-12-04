@@ -18,7 +18,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
+      body:
+      Container(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 50),
         child: Column(
           children: [
@@ -112,6 +113,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               MaterialPageRoute(builder: (context) => LoginPage()));
                         });
                       },
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                        currentUser.toString()
                     ),
                   ),
                   Container(

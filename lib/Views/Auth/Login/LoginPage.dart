@@ -158,6 +158,9 @@ class _LoginPageState extends State<LoginPage> {
             // BUTTON Đăng Nhập
             GestureDetector(
               onTap: () {
+                showDialog(context: context, builder: (context) {
+                  return const Center(child: CircularProgressIndicator());
+                });
                 FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                     email: _emailTextController.text,

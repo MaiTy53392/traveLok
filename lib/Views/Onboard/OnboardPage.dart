@@ -28,7 +28,7 @@ class _OnboardPageState extends State<OnboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-      children: [
+      children: <Widget> [
         Expanded(
           child: PageView.builder(
             controller: _controller,
@@ -46,12 +46,12 @@ class _OnboardPageState extends State<OnboardPage> {
                     right: 0,
                     child: Container(
                       padding:
-                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      const EdgeInsets.only(left: 20, right: 20, top: 5),
                       width: MediaQuery.of(context).size.width,
                       height: 400,
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage(""), fit: BoxFit.cover),
+                              image: AssetImage("images/bg-welcome.jpg"), fit: BoxFit.cover),
                           color: Colors.redAccent,
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(30),
@@ -64,7 +64,7 @@ class _OnboardPageState extends State<OnboardPage> {
                       padding: EdgeInsets.all(24),
                       child: Text(
                         "Life is short and the "
-                        "world is wide",
+                            "world is wide",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
@@ -75,8 +75,8 @@ class _OnboardPageState extends State<OnboardPage> {
                     padding: EdgeInsets.only(left: 24, right: 24),
                     child: Text(
                       "As Friends tours and travel, we customize "
-                      "reliable and trustworthy educational tours to "
-                      "destination all over the world",
+                          "reliable and trustworthy educational tours to "
+                          "destination all over the world",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 14, height: 1.5, color: Colors.grey),
@@ -88,28 +88,6 @@ class _OnboardPageState extends State<OnboardPage> {
                     children: List.generate(3, (index) => dot(index, context)),
                   ),
                   const Spacer(),
-                  // GestureDetector(
-                  //   onTap: () => Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => const LoginPage())),
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.blue,
-                  //       borderRadius: BorderRadius.circular(15),
-                  //     ),
-                  //     padding: const EdgeInsets.only(
-                  //         left: 130, right: 130, top: 20, bottom: 20),
-                  //     child: Text(
-                  //       'Get Started',
-                  //       textAlign: TextAlign.center,
-                  //       style: TextStyle(
-                  //           fontSize: 14,
-                  //           fontWeight: FontWeight.bold,
-                  //           color: Colors.white),
-                  //     ),
-                  //   ),
-                  // ),
                   Container(
                     height: 50,
                     margin: const EdgeInsets.all(40),
@@ -131,12 +109,12 @@ class _OnboardPageState extends State<OnboardPage> {
                       },
                       style: ButtonStyle(
                         shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )),
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            )),
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.blue),
+                        MaterialStateProperty.all<Color>(Colors.blue),
                       ),
                       child: Text(
                         _currentIndex == 3 - 3 ? "Get started" : "Next",

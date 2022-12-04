@@ -10,7 +10,9 @@ class AppColor {
   static Color xLightTextColor = Color(0xB3FFFFFF);
   static Color xDarkTextColor = Color(0xFF303030);
   static Color xShadowColor = Color(0xFFFAFAFA);
-  static Color xOrangeColor = Color(0xFFF57F17);
+  static Color xOrangeColor = Color(0xFFFF9800);
+  static Color xSuccessColor = Color(0xFF33691E);
+  static Color xErrorColor = Color(0xFFB71C1C);
 }
 const kHeadTextStyle = TextStyle(
   color: Colors.black,

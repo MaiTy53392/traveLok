@@ -51,20 +51,16 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: Row(
                           children: <Widget>[
-                            currentUser!.photoURL != null
-                                ?
-                            CircleAvatar(
-                                radius: 20,
-                                backgroundImage: NetworkImage(
-                                    currentUser!.photoURL!.toString()
-                                )
-                            )
-                                :
-                            const CircleAvatar(
-                              radius: 20,
-                              backgroundImage: NetworkImage(
-                                  'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),
-                            ),
+                            currentUser!.photoURL == null
+                                ? const CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: NetworkImage(
+                                        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),
+                                  )
+                                : CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: NetworkImage(
+                                        currentUser!.photoURL!.toString())),
                             const SizedBox(width: 5),
                             Text(
                               currentUser!.displayName!.toString(),

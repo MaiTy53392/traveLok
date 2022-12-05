@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:travelok_vietnam_app/Views/EditProfile/EditProfilePage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travelok_vietnam_app/Views/Auth/Login/LoginPage.dart';
 import 'package:travelok_vietnam_app/Views/AddProduct/AddProductPage.dart';
+import 'package:travelok_vietnam_app/Views/Message/MessagePage.dart';
+import 'package:travelok_vietnam_app/Views/Calendar/CalendarPage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -60,14 +63,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: <Widget>[
                   currentUser!.photoURL != null
                       ? CircleAvatar(
-                          radius: 50,
-                          backgroundImage:
-                              NetworkImage(currentUser!.photoURL!.toString()))
+                      radius: 50,
+                      backgroundImage:
+                      NetworkImage(currentUser!.photoURL!.toString()))
                       : const CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(
-                              'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),
-                        ),
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'),
+                  ),
                   const SizedBox(height: 10),
                   Text(
                     currentUser!.displayName!.toString(),
@@ -93,90 +96,70 @@ class _ProfilePageState extends State<ProfilePage> {
                         bool isSignedIn = await googleSignin.isSignedIn();
                         isSignedIn == false
                             ? FirebaseAuth.instance.signOut().then((value) {
-                                print("Đăng xuất thành công");
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginPage()));
-                              })
+                          print("Đăng xuất thành công");
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const LoginPage()));
+                        })
                             : googleSignin.disconnect().then((value) =>
-                                FirebaseAuth.instance.signOut().then((value) {
-                                  print("Đăng xuất thành công");
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginPage()));
-                                }));
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 40),
-                    child: Table(children: [
-                      TableRow(children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 15),
-                          child: ElevatedButton(
-                            child: const Text("Thêm phòng"),
-                            onPressed: () {
-                              Navigator.push(
+                            FirebaseAuth.instance.signOut().then((value) {
+                              print("Đăng xuất thành công");
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const AddProductPage()));
-                            },
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 15),
-                          child: Column(
-                            children: [
-                              Text(
-                                'Travel Trips',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: constants.AppColor.xDarkTextColor),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                '238',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: constants.AppColor.xBackgroundColor),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 15),
-                          child: Column(
-                            children: [
-                              Text(
-                                'Bucket List',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: constants.AppColor.xDarkTextColor),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                '473',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: constants.AppColor.xBackgroundColor),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ]),
-                    ]),
+                                      const LoginPage()));
+                            }));
+                      },
+                    ),
                   ),
+                  Table(children: [
+                    TableRow(children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: TextButton(
+                          child: const Text("Thêm mới"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const AddProductPage()));
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: TextButton(
+                          child: const Text("Địa điểm"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const CalendarPage()));
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: TextButton(
+                          child: const Text("Người dùng"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const MessagePage()));
+                          },
+                        ),
+                      ),
+                    ]),
+                  ]),
                   Table(children: [
                     TableRow(children: [
                       Container(
@@ -185,14 +168,39 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Column(
                           children: [
                             Text(
-                              'Reward Points',
+                              'Xác thực',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: constants.AppColor.xDarkTextColor),
                             ),
                             const SizedBox(height: 5),
+                            currentUser!.emailVerified
+                                ? const Icon(
+                              Icons.verified,
+                              color: Colors.green,
+                            )
+                                : const Icon(
+                              Icons.highlight_remove,
+                              color: Colors.red,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        child: Column(
+                          children: [
                             Text(
-                              '360',
+                              'Ngày tạo',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: constants.AppColor.xDarkTextColor),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              DateFormat('dd/MM/yyyy').format(currentUser!
+                                  .metadata.creationTime as DateTime),
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -207,36 +215,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Column(
                           children: [
                             Text(
-                              'Travel Trips',
+                              'Đăng nhập',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: constants.AppColor.xDarkTextColor),
                             ),
                             SizedBox(height: 5),
                             Text(
-                              '238',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: constants.AppColor.xBackgroundColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Bucket List',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: constants.AppColor.xDarkTextColor),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              '473',
+                              DateFormat('dd/MM/yyyy').format(currentUser!
+                                  .metadata.lastSignInTime as DateTime),
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -249,6 +236,50 @@ class _ProfilePageState extends State<ProfilePage> {
                   ])
                 ],
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if(currentUser!.emailVerified) {
+                      showDialog(context: context, builder: (context) {
+                        return const AlertDialog(content: Text("Email của bạn đã xác thực."));
+                      });
+                    } else {
+                      currentUser?.sendEmailVerification();
+                      showDialog(context: context, builder: (context) {
+                        return const AlertDialog(content: Text("Yêu cầu xác thực thành công! Hãy kiểm tra Email."));
+                      });
+                    }
+                  },
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80.0)),
+                      )
+                  ),
+                  child: Ink(
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xff374ABE), Color(0xff64B6FF)],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                        borderRadius: BorderRadius.circular(30.0)),
+                    child: Container(
+                      constraints: const BoxConstraints(
+                          maxWidth: 250.0, minHeight: 50.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "Gửi Email xác thực",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             )
           ],
         ),

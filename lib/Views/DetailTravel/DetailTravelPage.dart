@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelok_vietnam_app/Models/Station_Travel.dart';
+import 'package:travelok_vietnam_app/Views/CheckOut/CheckOutPage.dart';
 import 'package:travelok_vietnam_app/constants.dart' as constants;
 
 class DetailTravel extends StatelessWidget {
@@ -52,12 +53,17 @@ class DetailTravel extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  width: MediaQuery.of(context).size.width * .6,
                   child: Text(
                     '${travel.title}',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: constants.AppColor.xOverViewBackgroundColor),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: constants.AppColor.xOverViewBackgroundColor,
+                    ),
+
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 GestureDetector(
@@ -127,12 +133,17 @@ class DetailTravel extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '${travel.title}',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: constants.AppColor.xDarkTextColor,
+                            Container(
+                              width: MediaQuery.of(context).size.width * .7,
+                              child: Text(
+                                '${travel.title}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: constants.AppColor.xDarkTextColor,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Text(
@@ -175,9 +186,12 @@ class DetailTravel extends StatelessWidget {
                             Text(
                               '${travel.country}',
                               style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: constants.AppColor.xGrayTextColor),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: constants.AppColor.xGrayTextColor,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
@@ -272,6 +286,8 @@ class DetailTravel extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             color: constants.AppColor.xGrayTextColor,
                           ),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -288,7 +304,7 @@ class DetailTravel extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         // Write Click Listener Code Here.
-                        print('BOOK');
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const CheckOutPage()));
                       },
                       child: Container(
                         alignment: Alignment.center,

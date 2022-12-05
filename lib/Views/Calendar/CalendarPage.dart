@@ -32,7 +32,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   const SizedBox(width: 45, height: 45, child: Text("")),
                   Container(
                     child: Text(
-                      'Quản lý phòng',
+                      'Quản lý địa điểm',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -97,7 +97,8 @@ class _CalendarPageState extends State<CalendarPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => UpdateProductPage(
+                                          builder: (context) =>
+                                              UpdateProductPage(
                                             travel: snapshot.data![index],
                                           ),
                                         ),
@@ -187,13 +188,18 @@ class _CalendarPageState extends State<CalendarPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(
-                                              '${travel.title}',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: constants
-                                                    .AppColor.xDarkTextColor,
+                                            Container(
+                                              width: MediaQuery.of(context).size.width * .6,
+                                              child: Text(
+                                                '${travel.title}',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: constants
+                                                      .AppColor.xDarkTextColor,
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
                                             const SizedBox(height: 5),

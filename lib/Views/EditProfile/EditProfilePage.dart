@@ -24,7 +24,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final TextEditingController _displayNameTextController =
       TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
-  final TextEditingController _phoneNumberTextController =
+  final TextEditingController _passwordTextController =
       TextEditingController();
 
   Future _pickImage(ImageSource source) async {
@@ -79,7 +79,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     super.initState();
     _displayNameTextController.text = currentUser!.displayName.toString();
-    _phoneNumberTextController.text = currentUser!.phoneNumber.toString();
     _emailTextController.text = currentUser!.email.toString();
   }
 
@@ -209,11 +208,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               child: TextField(
                 keyboardType: TextInputType.number,
-                controller: _phoneNumberTextController,
+                controller: _passwordTextController,
                 cursorColor: constants.AppColor.xBackgroundColor,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: const InputDecoration(
-                  hintText: "Số điện thoại",
+                  hintText: "Mật khẩu",
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
@@ -279,8 +278,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     imageUrl = await referenceImageToUpload.getDownloadURL();
                     await currentUser?.updatePhotoURL(imageUrl);
                     await currentUser
-                        ?.updateDisplayName(_displayNameTextController.text);
-                    await currentUser?.updateEmail(_emailTextController.text);
+                        ?.updateDisplayName(_displayNameTextController.text.trim());
+                    await currentUser?.updateEmail(_emailTextController.text.trim());
+                    await currentUser?.updatePassword(_passwordTextController.text.trim());
                   } catch (error) {
                     print(error);
                   }
